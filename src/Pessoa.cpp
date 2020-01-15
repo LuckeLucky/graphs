@@ -1,7 +1,7 @@
 #include "Pessoa.h"
 
 Pessoa::Pessoa() {
-	peso = 0;//Todas as pessoas começam com peso de carga igual a 0
+	peso = 0;//Todas as pessoas comeÃ§am com peso de carga igual a 0
 }
 Pessoa::~Pessoa() {
 }
