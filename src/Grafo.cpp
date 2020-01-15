@@ -8,13 +8,13 @@ Grafo::~Grafo()
 {
 	Apaga_Conteudo();
 	for (list<Pessoa*>::iterator itp = lista_pessoas.begin(); itp != lista_pessoas.end();) {
-		delete(*itp);//primeiro apagamos o elemento referenciado por *Pessoa que é Pessoa
+		delete(*itp);//primeiro apagamos o elemento referenciado por *Pessoa que Ã© Pessoa
 		itp = lista_pessoas.erase(itp);//eliminamos o *Pessoa da lista
 	}
 }
 
 //-------------------------------------------------------------------
-//Método: Load
+//MÃ©todo: Load
 //Parametros:
 // Entrada:
 //     fich_grafo: Ficheiro dos dados do Grafo
@@ -37,7 +37,7 @@ bool Grafo::Load(const string &fich_grafo, const string &fich_pessoas)
 		file_grafo >> n_fronteiras;
 		file_grafo >> n_arestas;
 		while ((getline(file_grafo, linha))) {
-			if (linha.find(';') != string::npos) {//se a linha tiver o separador ';' é onde temos os dados para ler
+			if (linha.find(';') != string::npos) {//se a linha tiver o separador ';' Ã© onde temos os dados para ler
 				if (n_fronteiras) {//fronteiras para ler
 					f = f->Constroi(linha);
 					if (!f)
@@ -63,7 +63,7 @@ bool Grafo::Load(const string &fich_grafo, const string &fich_pessoas)
 	file_pessoas.open(fich_pessoas);
 	if (file_pessoas.is_open()) {//Verifica se o ficheiro foi aberto com sucesso
 		while ((getline(file_pessoas, linha))) {
-			if (linha.find(';') != string::npos) {//se a linha tiver o separador ';' é onde temos os dados para ler
+			if (linha.find(';') != string::npos) {//se a linha tiver o separador ';' Ã© onde temos os dados para ler
 				p = new Pessoa;
 				if (!p->Constroi(linha))
 					return false;
@@ -77,7 +77,7 @@ bool Grafo::Load(const string &fich_grafo, const string &fich_pessoas)
 	return true;//Ficheiros lidos com sucesso
 }
 //-------------------------------------------------------------------
-//Método: ContarNos
+//MÃ©todo: ContarNos
 //Parametros:
 // Entrada:--
 // Retorno:
@@ -88,7 +88,7 @@ int Grafo::ContarNos()
 	return (int)map_caminhos.size();//size do map e igual ao numero de fronteiras que temos guardadas no nosso map
 }
 //-------------------------------------------------------------------
-//Método: ContarArcos
+//MÃ©todo: ContarArcos
 //Parametros:
 // Entrada:--
 // Retorno:
@@ -103,7 +103,7 @@ int Grafo::ContarArcos()
 	return conta_arcos;
 }
 //-------------------------------------------------------------------
-//Método: Memoria
+//MÃ©todo: Memoria
 //Parametros:
 // Entrada:--
 // Retorno:
@@ -117,7 +117,7 @@ int Grafo::Memoria()
 	m_total += sizeof(Grafo);
 	//O grafo tem uma lista de pessoas por isso temos que contar o espaco ocupado por elas
 	for (list<Pessoa*>::iterator itp = lista_pessoas.begin(); itp != lista_pessoas.end(); ++itp) {
-		m_total+=sizeof(Pessoa*);//A lista é de ponteiros
+		m_total+=sizeof(Pessoa*);//A lista Ã© de ponteiros
 		m_total += sizeof(Pessoa);//Os ponteiros apontam para pessoas
 		nome=(*itp)->Get_Nome();//A Pesso tem um nome
 		m_total+=(sizeof(char)*(nome.size()+1));//Memoria ocupada pelo nome da pessoa
@@ -134,20 +134,20 @@ int Grafo::Memoria()
 	return (int)m_total;
 }
 //-------------------------------------------------------------------
-//Método: NoMaisArcos
+//MÃ©todo: NoMaisArcos
 //Parametros:
 // Entrada:--
 // Retorno:
-//    lista de inteiros com o numero dos nós com mais arcos
+//    lista de inteiros com o numero dos nÃ³s com mais arcos
 //-------------------------------------------------------------------
 list<int> *Grafo::NoMaisArcos()
 {
 	list<int> *mais_arcos = new list<int>;//iniciar a lista de inteiros
-	int maior_valor = 0;//valor que serve para dizer se certo nó entra na lista x ou nao
+	int maior_valor = 0;//valor que serve para dizer se certo nÃ³ entra na lista x ou nao
 	for (map<Fronteira *, list<Aresta*>>::iterator it = map_caminhos.begin(); it != map_caminhos.end(); ++it) {
-		if ((int)it->second.size() >maior_valor) {//se o size da lista de arestas desse nó for maior que o maior valor registado ate agora :
+		if ((int)it->second.size() >maior_valor) {//se o size da lista de arestas desse nÃ³ for maior que o maior valor registado ate agora :
 			maior_valor = (int)it->second.size();      //o maior_valor passa a ser o size dessa lista de arestas
-			mais_arcos->clear();                           //damos clear a nossa lista de nos,ja que todos os nos têm menor valor que o atual
+			mais_arcos->clear();                           //damos clear a nossa lista de nos,ja que todos os nos tÃªm menor valor que o atual
 			mais_arcos->push_back(it->first->Get_Numero());//inserimos o novo no que neste caso vai ser sempre o primeiro da lista
 		}
 		else if (it->second.size() == maior_valor) {//se houver nos com o mesmo numero de arcos basta inserir na lista de inteiros
@@ -157,7 +157,7 @@ list<int> *Grafo::NoMaisArcos()
 	return mais_arcos;
 }
 //-------------------------------------------------------------------
-//Método: Adjacencia
+//MÃ©todo: Adjacencia
 //Parametros:
 // Entrada:
 //			v1:vertice 1
@@ -177,7 +177,7 @@ bool Grafo::Adjacencia(int v1, int v2)
 	return false;
 }
 //-------------------------------------------------------------------
-//Método: VerticesIsolados
+//MÃ©todo: VerticesIsolados
 //Parametros:
 // Entrada:
 //			v1:vertice inicial
@@ -201,7 +201,7 @@ list<int> *Grafo::Caminho(int v1, int v2, double &custo_total)
 	delete(x);
 	list<int> *caminho = new list<int>;
 	if (Rec_Caminho(v1, v2, caminho, visitado, custo_total)) {//funcao recursiva para descobrir o caminho
-		caminho->push_front(v1);//como o vertice inicial é o primeiro a ser visitado
+		caminho->push_front(v1);//como o vertice inicial Ã© o primeiro a ser visitado
 		return caminho;
 	}
 	else{
@@ -210,28 +210,28 @@ list<int> *Grafo::Caminho(int v1, int v2, double &custo_total)
 	}
 }
 //-------------------------------------------------------------------
-//Método: VerticesIsolados
+//MÃ©todo: VerticesIsolados
 //Parametros:
 // Entrada:--
 // Retorno:
-//    lista de fronteiras isoladas(não têm arestas ligadas a elas)
+//    lista de fronteiras isoladas(nÃ£o tÃªm arestas ligadas a elas)
 //-------------------------------------------------------------------
 list<int> *Grafo::VerticesIsolados()
 {
 	list<int> *isolados = new list<int>;//iniciar a lista de inteiros
 	for (map<Fronteira *, list<Aresta*>>::iterator it = map_caminhos.begin(); it != map_caminhos.end(); ++it) {
-		if ((int)it->second.size() ==0) {  //se a fronteira nao tiver arestas quer dizer que o vertice é isolado             
+		if ((int)it->second.size() ==0) {  //se a fronteira nao tiver arestas quer dizer que o vertice Ã© isolado             
 			isolados->push_back(it->first->Get_Numero());
 		}
 	}
 	return isolados;
 }
 //-------------------------------------------------------------------
-//Método: Search
+//MÃ©todo: Search
 //Parametros:
 // Entrada:--
 // Retorno:
-//    verdadeiro ou falso dependendo se o vertice esta no grafo ou não
+//    verdadeiro ou falso dependendo se o vertice esta no grafo ou nÃ£o
 //-------------------------------------------------------------------
 bool Grafo::Search(int v)
 {
@@ -240,7 +240,7 @@ bool Grafo::Search(int v)
 	return false;
 }
 //-------------------------------------------------------------------
-//Método: RemoverVertice
+//MÃ©todo: RemoverVertice
 //Parametros:
 // Entrada:
 //			v:vertice a ser removido
@@ -253,7 +253,7 @@ bool Grafo::RemoverVertice(int v)
 	Aresta *a = NULL;
 	if (!(f=Encontra_Vertice(v)))//o vertice nao se encontra no grafo
 		return false;
-	//remover as arestas que têm como destino o v
+	//remover as arestas que tÃªm como destino o v
 	for (map<Fronteira *, list<Aresta*>>::iterator itm = map_caminhos.begin(); itm != map_caminhos.end(); ++itm) {
 		for (list<Aresta*>::iterator ita = itm->second.begin(); ita != itm->second.end();) {
 			if ((*ita)->Get_Destino() == v) {
@@ -276,7 +276,7 @@ bool Grafo::RemoverVertice(int v)
 	return true;
 }
 //-------------------------------------------------------------------
-//Método: RemoverAresta
+//MÃ©todo: RemoverAresta
 //Parametros:
 // Entrada:
 //			v1:vertice inicio
@@ -318,7 +318,7 @@ bool Grafo::RemoverAresta(int v1, int v2)
 	return false;
 }
 //-------------------------------------------------------------------
-//Método: EscreverXML
+//MÃ©todo: EscreverXML
 //Parametros:
 // Entrada:
 //     &s:nome do ficheiro onde vamos escrever XML
@@ -343,7 +343,7 @@ void Grafo::EscreverXML(const string &s)
 		return;
 }
 //-------------------------------------------------------------------
-//Método: LerXML
+//MÃ©todo: LerXML
 //Parametros:
 // Entrada:
 //     &s:nome do ficheiro onde vamos ler o XML
@@ -394,7 +394,7 @@ bool Grafo::LerXML(const string &s)
 		
 }
 //-------------------------------------------------------------------
-//Método: DevolveVericesTipo
+//MÃ©todo: DevolveVericesTipo
 //Parametros:
 // Entrada:
 //			&tipo: string com o tipo de fronteira:1,2 ou 3;
@@ -404,18 +404,18 @@ bool Grafo::LerXML(const string &s)
 list<int> *Grafo::DevolveVerticesTipo(const string &tipo)
 {
 	int t = atoi(tipo.c_str());//converter a string para inteiro
-	if (t < 0 || t>3)//caso o tipo da fronteira seja algo diferente dos 4 tipo 1 2 3  e 0 que é o default
+	if (t < 0 || t>3)//caso o tipo da fronteira seja algo diferente dos 4 tipo 1 2 3  e 0 que Ã© o default
 		return NULL;
 	list<int> *vertices_tipo = new list<int>;
 	for (map<Fronteira *,list<Aresta*>>::iterator it_front = map_caminhos.begin(); it_front != map_caminhos.end(); ++it_front) {//percorrer o map
-		if (it_front->first->Get_Tipo() == t) {//só nos interessa a chave
+		if (it_front->first->Get_Tipo() == t) {//sÃ³ nos interessa a chave
 			vertices_tipo->push_back(it_front->first->Get_Numero());
 		}
 	}
 	return vertices_tipo;
 }
 //-------------------------------------------------------------------
-//Método: CaminhoMinimo
+//MÃ©todo: CaminhoMinimo
 //Parametros:
 // Entrada:
 //			v1:vertice inicial
@@ -458,7 +458,7 @@ list<int> *Grafo::CaminhoMinimo(int v1, int v2, double &custo_total)
 			}
 		}
 	}
-	//recontruir o caminho minimo começando no vertice 2
+	//recontruir o caminho minimo comeÃ§ando no vertice 2
 	list<int> *caminho = new list<int>;
 	custo_total = caminho_min[v2].second;
 	v_act = v2;
@@ -478,7 +478,7 @@ list<int> *Grafo::CaminhoMinimo(int v1, int v2, double &custo_total)
 
 }
 //-------------------------------------------------------------------
-//Método: CaminhoMaximo
+//MÃ©todo: CaminhoMaximo
 //Parametros:
 // Entrada:
 //			v1:vertice inicial
@@ -510,7 +510,7 @@ list<int> *Grafo::CaminhoMaximo(int v1, int v2, double &custo_total)
 	return caminho;
 }
 //-------------------------------------------------------------------
-//Método: PossivelCaminho
+//MÃ©todo: PossivelCaminho
 //Parametros:
 // Entrada:
 //			v1:vertice 1
@@ -553,7 +553,7 @@ bool Grafo::PossivelCaminho(int v1, int v2, int TipoFronteira)
 				if((*it)->Get_Fronteira()->Get_Numero()==v2)// se chegamos ao v2 devolvemos true
 					return true;
 				else{
-					fila.push_back((*it)->Get_Fronteira()->Get_Numero());//inserimos na fila o destino desta aresta que é o mesmo tipo
+					fila.push_back((*it)->Get_Fronteira()->Get_Numero());//inserimos na fila o destino desta aresta que Ã© o mesmo tipo
 					visitado[(*it)->Get_Fronteira()->Get_Numero()]=true;//marcar esse destino como visitado
 				}
 			}
@@ -563,7 +563,7 @@ bool Grafo::PossivelCaminho(int v1, int v2, int TipoFronteira)
 	return false;	
 }
 //-------------------------------------------------------------------
-//Método: FronteirasMenosVisitadas
+//MÃ©todo: FronteirasMenosVisitadas
 //Parametros:
 // Entrada:
 //			&Lv:lista onde vai ser guardada as fronteiras menos visitadas;
@@ -572,7 +572,7 @@ bool Grafo::PossivelCaminho(int v1, int v2, int TipoFronteira)
 //------------------------------------------------------------------
 void Grafo::FronteirasMenosVisitadas(list<int> &Lv)
 {
-	if (Lv.size()!=0) {//se a lista não estiver vazia limpa-se a lista
+	if (Lv.size()!=0) {//se a lista nÃ£o estiver vazia limpa-se a lista
 		Lv.clear();
 	}
 	int visitas = 0;
@@ -615,17 +615,17 @@ void Grafo::FronteirasMenosVisitadas(list<int> &Lv)
 }
 
 //-------------------------------------------------------------------
-//Método: SistiosInacessiveisAPartirDe
+//MÃ©todo: SistiosInacessiveisAPartirDe
 //Parametros:
 // Entrada:
-//			v1:vertice onde começamos
+//			v1:vertice onde comeÃ§amos
 //			&LV
 // Retorno:
 //    verdadeiro ou falso dependendo se o vertic
 //------------------------------------------------------------------
 void Grafo::SitiosInacessiveisAPartirDe(int V1, list<int> &Lv)
 {
-	if (!Lv.empty()) {//se a lista não estiver vazia limpa-se a lista
+	if (!Lv.empty()) {//se a lista nÃ£o estiver vazia limpa-se a lista
 		Lv.clear();
 	}
 	if (V1 == 0)
@@ -709,7 +709,7 @@ bool Grafo::Rec_Caminho(int v1, int v2, list<int> *caminho, map<int, bool> &visi
 	if (!f_act)//se o vertice nao estiver no grafo nao podemos fazer nada
 		return false;
 	for (list<Aresta*>::iterator it = map_caminhos[f_act].begin(); it != map_caminhos[f_act].end(); ++it) {
-		if (visitado[(*it)->Get_Destino()])//se ja visitamos o destino desta aresta não vale a pena utiliza-la
+		if (visitado[(*it)->Get_Destino()])//se ja visitamos o destino desta aresta nÃ£o vale a pena utiliza-la
 			continue;
 		if ((*it)->Get_Destino() == v2) {
 			caminho->push_front(v2);
